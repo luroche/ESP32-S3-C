@@ -1,0 +1,31 @@
+Pasos a seguir:
+
+cd 'C:\Users\luisr\OneDrive\Escritorio\ESP32 project\'
+idf.py fullclean
+idf.py set-target esp32s3
+idf.py reconfigure
+idf.py build
+
+
+
+Después del build hay que flashearlo
+idf.py -p COM6 flash #Dependiendo del puerto, o se puede quitar el -p COM6
+
+Para abrir el monitor serie para ver la salida:
+idf.py monitor
+
+idf.py build flash monitor
+
+
+
+Esto limpiará cualquier archivo de compilación previo y luego lo recompilará. Si la compilación tiene éxito, podrás proceder al siguiente paso.
+idf.py fullclean
+idf.py build
+
+Menu de conf:
+idf.py menuconfig
+
+
+Cuando lo vuelva a ejecutar:
+idf.py reconfigure
+idf.py build

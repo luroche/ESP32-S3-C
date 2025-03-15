@@ -1,0 +1,27 @@
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM7 instead...[0m
+[0;33m--- esp-idf-monitor 1.5.0 on \\.\COM7 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x4200bc42: task_wdt_timeout_handling at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/task_wdt/task_wdt.c:434
+0x4200c058: task_wdt_isr at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/task_wdt/task_wdt.c:507
+0x403771cd: _xt_lowint1 at C:/Espressif/frameworks/esp-idf-v5.4/components/xtensa/xtensa_vectors.S:1240
+0x42006fe1: uart_tx_char at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_driver_uart/src/uart_vfs.c:168
+0x42007e93: uart_write at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_driver_uart/src/uart_vfs.c:223
+0x420095a6: esp_vfs_write at C:/Espressif/frameworks/esp-idf-v5.4/components/vfs/vfs.c:945 (discriminator 4)
+0x4201bfae: write at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/syscalls/syswrite.c:11 (discriminator 1)
+0x42008f9c: console_write at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_vfs_console/vfs_console.c:71
+0x420095a6: esp_vfs_write at C:/Espressif/frameworks/esp-idf-v5.4/components/vfs/vfs.c:945 (discriminator 4)
+0x4201b9f6: __swrite at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/stdio.c:94
+0x4201b019: __sflush_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/fflush.c:224
+0x4201b06a: _fflush_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/fflush.c:278
+0x4201b88d: lflush at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/refill.c:29 (discriminator 1)
+ (inlined by) lflush at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/refill.c:26 (discriminator 1)
+0x4202574a: _fwalk_sglue at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/fwalk.c:47
+0x4201b945: __srefill_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/refill.c:106
+0x4201b0ed: _fgets_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/fgets.c:144
+0x4201b19f: fgets at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/fgets.c:195 (discriminator 1)
+0x4200a1cc: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:98 (discriminator 1)
+0x4202694f: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037a559: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0m

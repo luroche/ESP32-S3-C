@@ -1,0 +1,275 @@
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM7 instead...[0m
+[0;33m--- esp-idf-monitor 1.5.0 on \\.\COM7 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+[0m
+[0;33m--- 0x40375b79: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x4037ad5d: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x4038159d: abort at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/abort.c:38
+0x4200e6f2: get_convert_mode at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:107
+0x4200e8ef: adc_hal_digi_controller_config at C:/Espressif/frameworks/esp-idf-v5.4/components/hal/adc_hal.c:186
+0x4200cdfc: adc_continuous_start at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_adc/adc_continuous.c:324
+0x42009ae9: init_adc_dma at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:43
+0x42009b97: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:68
+0x4201af13: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037b625: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40375ab8: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0m

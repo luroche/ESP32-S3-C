@@ -1,0 +1,37 @@
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM7 instead...[0m
+[0;33m--- esp-idf-monitor 1.5.0 on \\.\COM7 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40375a85: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x40379c55: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x40380351: __assert_func at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/assert.c:80
+0x4200d963: tcpip_send_msg_wait_sem at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/tcpip.c:454 (discriminator 1)
+0x42018bea: netconn_apimsg at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/api_lib.c:134
+0x42018c26: netconn_new_with_proto_and_callback at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/api_lib.c:164
+0x4200d862: lwip_socket at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/sockets.c:1746 (discriminator 12)
+0x4200a07a: socket at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/include/lwip/sockets.h:48
+ (inlined by) enviar_udp at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:49
+0x4200a1c3: sistema at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:79
+0x4200a251: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:98
+0x420269d3: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037a559: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x403759c4: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0;33m--- 0x40375a85: panic_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/panic.c:454
+0x40379c55: esp_system_abort at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/esp_system_chip.c:92
+0x40380351: __assert_func at C:/Espressif/frameworks/esp-idf-v5.4/components/newlib/assert.c:80
+0x4200d963: tcpip_send_msg_wait_sem at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/tcpip.c:454 (discriminator 1)
+0x42018bea: netconn_apimsg at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/api_lib.c:134
+0x42018c26: netconn_new_with_proto_and_callback at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/api_lib.c:164
+0x4200d862: lwip_socket at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/lwip/src/api/sockets.c:1746 (discriminator 12)
+0x4200a07a: socket at C:/Espressif/frameworks/esp-idf-v5.4/components/lwip/include/lwip/sockets.h:48
+ (inlined by) enviar_udp at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:49
+0x4200a1c3: sistema at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:79
+0x4200a251: app_main at C:/Users/luisr/OneDrive/Escritorio/ESP32 project/main/main.c:98
+0x420269d3: main_task at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/app_startup.c:208
+0x4037a559: vPortTaskWrapper at C:/Espressif/frameworks/esp-idf-v5.4/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x403759c4: esp_restart_noos at C:/Espressif/frameworks/esp-idf-v5.4/components/esp_system/port/soc/esp32s3/system_internal.c:160
+[0m
+[0m
