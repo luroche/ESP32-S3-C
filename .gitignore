@@ -1,0 +1,9 @@
+# Ignorar entornos virtuales
+mi_entorno/
+env/
+venv/
+
+# Otros archivos temporales o de configuración que no necesitas subir
+__pycache__/
+*.pyc
+build/
