@@ -1,5 +1,5 @@
 idf_component_register(
-    SRCS "main.c" #Archivo fuente
+    SRCS "Untitled-4.c" "Untitled-5.c" "main.c" #Archivo fuente
     INCLUDE_DIRS ""
     REQUIRES driver esp_timer lwip freertos esp_eth)
 

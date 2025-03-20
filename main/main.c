@@ -1,127 +1,102 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/queue.h"
+#include "esp_system.h"
 #include "driver/adc.h"
-#include "driver/gpio.h"
-#include "esp_timer.h"
-#include "esp_eth.h"
+#include "driver/timer.h"
 #include "lwip/sockets.h"
-#include "lwip/netdb.h"
+#include "lwip/inet.h"
 
-// Defino puertos de los sensores ASC712
-#define CURRENT_SENSOR_1 GPIO_NUM_5
-#define CURRENT_SENSOR_2 GPIO_NUM_6
-#define CURRENT_SENSOR_3 GPIO_NUM_7
+#define ADC1_CHANNEL_0 ADC1_CHANNEL_0  // GPIO 36
+#define ADC1_CHANNEL_3 ADC1_CHANNEL_3  // GPIO 39
+#define ADC1_CHANNEL_6 ADC1_CHANNEL_6  // GPIO 34
 
-// Defino puertos del UDP
-#define W5500_RST_PIN GPIO_NUM_9
-#define W5500_CS_PIN GPIO_NUM_10
+#define NUM_MUESTRAS 180     // Tamaño del buffer # SI PONGO 150 se enviaran 500 paquetes al segundo, y si pongo 200 se envian 375 al segundo 
+#define MUESTREO_HZ 25000    // Frecuencia de muestreo (25 kHz)
+#define TIMER_DIVIDER 80     // Divide el clock base (80 MHz → 1 MHz)
 
-#define UDP_PORT 9999
-#define REMOTE_PORT 8888
+// Configuración UDP
 #define REMOTE_IP "10.0.0.1"
+#define REMOTE_PORT 8888
 
-#define SENSIBILIDAD_ACS712_30A 0.66
-#define NUM_MENSAJES_UDP (60 * 3)
-#define INTERVALO_ENVIO_MS 5000
+uint32_t adc_samples[NUM_MUESTRAS];  // Buffer de datos ADC
+volatile int sample_index = 0;       // Índice para almacenar datos
 
-int datos[NUM_MENSAJES_UDP];
-
-
-// PROGRAMA
-void reset_w5500() {
-    gpio_set_level(W5500_RST_PIN, 0);
-    vTaskDelay(pdMS_TO_TICKS(100));
-    gpio_set_level(W5500_RST_PIN, 1);
-    vTaskDelay(pdMS_TO_TICKS(100));
-}
-
-void configurar_adc() {
-    adc1_config_width(ADC_WIDTH_BIT_12);
-    adc1_config_channel_atten(ADC1_CHANNEL_4, ADC_ATTEN_DB_11);
-    adc1_config_channel_atten(ADC1_CHANNEL_5, ADC_ATTEN_DB_11);
-    adc1_config_channel_atten(ADC1_CHANNEL_6, ADC_ATTEN_DB_11);
-}
-
-void enviar_udp(int *datos, size_t size) {
-    struct sockaddr_in dest_addr;
-    dest_addr.sin_addr.s_addr = inet_addr(REMOTE_IP);
-    dest_addr.sin_family = AF_INET;
-    dest_addr.sin_port = htons(REMOTE_PORT);
-
-    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
+void send_udp_data() {
+    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock < 0) {
-        printf("Error al crear socket UDP\n");
+        perror("Error creando socket UDP");
         return;
     }
 
-    sendto(sock, datos, size, 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+    struct sockaddr_in server_addr;
+    memset(&server_addr, 0, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(REMOTE_PORT);
+    server_addr.sin_addr.s_addr = inet_addr(REMOTE_IP);
+
+    size_t data_size = sizeof(adc_samples);
+    int sent_bytes = sendto(sock, adc_samples, data_size, 0,
+                            (struct sockaddr *)&server_addr, sizeof(server_addr));
+
+    if (sent_bytes < 0) {
+        perror("Error enviando datos UDP");
+    } else {
+        printf("Enviadas %d bytes por UDP\n", sent_bytes);
+    }
+
     close(sock);
 }
 
-void sistema() {
-    printf("Enviando datos...\n");
-    unsigned long startTime = esp_timer_get_time() / 1000;
-    int num_envios = 0;
-    int index = 0;
-
-    // TODO: CONSEGUIR LEER COMO MINIMO 20-25 kSPS LAS TRES MEDIDAS A LA VEZ
-    int c = 0;
-    while (c <= 5){ 
-    // while ((esp_timer_get_time() / 1000) - startTime < INTERVALO_ENVIO_MS) {
-        unsigned long tiempo_inicio = esp_timer_get_time();
-
-        int valor1 = adc1_get_raw(ADC1_CHANNEL_4);
-        int valor2 = adc1_get_raw(ADC1_CHANNEL_5);
-        int valor3 = adc1_get_raw(ADC1_CHANNEL_6);
-        
-        // float corriente1 = ((valor1 * (3.3 / 4095.0)) - 2.5) / SENSIBILIDAD_ACS712_30A;
-        // float corriente2 = ((valor2 * (3.3 / 4095.0)) - 2.5) / SENSIBILIDAD_ACS712_30A;
-        // float corriente3 = ((valor3 * (3.3 / 4095.0)) - 2.5) / SENSIBILIDAD_ACS712_30A;
-        
-        int corriente1 = ((valor1 * (3300 / 4095000)) - 2500) / SENSIBILIDAD_ACS712_30A; // 3.3V -> 3300 mV;   4095 y    2.5V
-        int corriente2 = ((valor2 * (3300 / 4095000)) - 2500) / SENSIBILIDAD_ACS712_30A;
-        int corriente3 = ((valor3 * (3300 / 4095000)) - 2500) / SENSIBILIDAD_ACS712_30A;
-
-        datos[index++] = (int)(corriente1);
-        datos[index++] = (int)(corriente2);
-        datos[index++] = (int)(corriente3);
-        
-        unsigned long tiempo_fin = esp_timer_get_time();
-        printf("Tiempo de lectura ADC3: %lu us\n", tiempo_fin - tiempo_inicio);
-
-        // TODO: Al meter cualquier tipo de delay aquí para cumplir un segundo se bloquea el programa
-
-
-        
-        // TODO: No he comprobado a mandarlo por UDP, pero con la programacion en arduino me lo hacía.
-        // Compruebo a mandarlos por udp
-        // TODO: En arduino no se podian enviar mas de 60*3 a la vez
-        if (index >= NUM_MENSAJES_UDP) {
-            enviar_udp(datos, sizeof(datos));
-            index = 0;
-            num_envios++;
-        }
-        c += 1;
+// ISR del temporizador: Lee 3 ADC y guarda en el buffer
+bool IRAM_ATTR timer_isr(void *param) {
+    if (sample_index < NUM_MUESTRAS) {
+        adc_samples[sample_index++] = adc1_get_raw(ADC1_CHANNEL_0);
+        adc_samples[sample_index++] = adc1_get_raw(ADC1_CHANNEL_3);
+        adc_samples[sample_index++] = adc1_get_raw(ADC1_CHANNEL_6);
     }
-    printf("C: %d ;", c);
-    printf("NUM ENVIOS: %d\n", num_envios);
+    
+    if (sample_index >= NUM_MUESTRAS) {
+        send_udp_data();  // Enviar datos por UDP
+        sample_index = 0; // Reiniciar índice
+    }
+
+    timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_0);  // Limpiar la interrupción
+    return true;  // Asegurar compatibilidad con timer_isr_callback_add
+}
+
+// Configurar y activar el temporizador
+void setup_timer() {
+    timer_config_t config = {
+        .divider = TIMER_DIVIDER,
+        .counter_dir = TIMER_COUNT_UP,
+        .counter_en = TIMER_PAUSE,
+        .alarm_en = TIMER_ALARM_EN,
+        .auto_reload = true,
+    };
+    timer_init(TIMER_GROUP_0, TIMER_0, &config);
+
+    double timer_interval_sec = 1.0 / MUESTREO_HZ;
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, timer_interval_sec * 1000000);
+    timer_enable_intr(TIMER_GROUP_0, TIMER_0);
+    timer_isr_callback_add(TIMER_GROUP_0, TIMER_0, timer_isr, NULL, ESP_INTR_FLAG_IRAM);
+    timer_start(TIMER_GROUP_0, TIMER_0);
+}
+
+// Configurar ADC
+void setup_adc() {
+    adc1_config_width(ADC_WIDTH_BIT_12);
+    adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_11);
+    adc1_config_channel_atten(ADC1_CHANNEL_6, ADC_ATTEN_DB_11);
 }
 
 void app_main() {
-    configurar_adc();
-    reset_w5500();
-
-    char entrada[10];
-    while (1) {
-        printf("Ingrese '1' para iniciar el sistema: ");
-        fflush(stdout); // TODO: Asegurar que el mensaje se imprime antes de esperar entrada
-        if (fgets(entrada, sizeof(entrada), stdin) != NULL) {
-            if (entrada[0] == '1' && (entrada[1] == '\n' || entrada[1] == '\0')) {
-                sistema();
-            }
-        }
-        vTaskDelay(pdMS_TO_TICKS(2000)); // TODO: Pequeño retraso para evitar consumo excesivo de CPU
-    }
+    setup_adc();
+    setup_timer();
+    printf("Iniciando muestreo ADC a 25 kHz y envío por UDP...\n");
 }
