@@ -1,127 +1,95 @@
-// programa de dos tareas, que se comunican a través de una cola
-// https://www.youtube.com/watch?v=YuuQ6YyFqus&list=PL-Hb9zZP9qC65SpXHnTAO0-qV6x5JxCMJ&index=6
-// En el final del video, en los logs, sale un numero al comienzo que es cada cuanto se ejecuta ese comando
-
 #include <stdio.h>
-#include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/timers.h"
+#include "freertos/semphr.h"
 #include "esp_log.h"
-#include "esp_timer.h"
-#include "esp_pm.h"
+#include "esp_system.h"
+#include "driver/adc.h"
+#include "soc/adc_channel.h"
+#include "driver/timer.h"
 
-#define led1 2
-uint8_t led_level = 0;
-static const char *tag ="main"; //Etiqueta de donde vienen los logs
-TimerHandle_t xTimers;
-int interval = 1000; //Esta en milisegundos: 1 segundo = 1000; 
-int timerId = 1;
-volatile int contador = 0;
+#define ADC_WIDTH        ADC_WIDTH_BIT_12   // Resolución de 12 bits para el ADC
+#define ADC1_CHANNEL_0  ADC1_CHANNEL_0     // Canal 0 para ADC1
+#define NUM_SAMPLES      3                  // Número de muestras a tomar por ADC
 
-esp_err_t init_led(void);
-esp_err_t blink_led(void);
-esp_err_t set_timer(void); //inicializar el timer para ejecutarse cada cierto tiempo
+#define TIMER_DIVIDER    16                // Divisor del temporizador
+#define TIMER_BASE_CLK   80000000          // 80 MHz (frecuencia base del temporizador en ESP32)
+#define TIMER_SCALE      (TIMER_BASE_CLK / TIMER_DIVIDER)  // Frecuencia del temporizador
+#define TIMER_INTERVAL    (TIMER_SCALE / 25000) // 25kHz (para 25kHz, 1 / 25kHz = 40us, luego el valor se ajusta en el código)
 
-void vTimerCallback(TimerHandle_t pxTimer)
-{
-    ESP_LOGI(tag, "Event was called from timer");
-    blink_led();
-}
+static uint32_t adc1_samples[NUM_SAMPLES];  // Buffer para almacenar las muestras de ADC
+static volatile uint32_t interrupts_per_second = 0;  // Contador de interrupciones por segundo
 
-void IRAM_ATTR my_timer_callback(void *arg)
-{
-    contador++;
-}
-
-void print_task(void *arg)
-{
-    while (1){
-        ESP_LOGI(tag, "¡Timer ejecutado %d veces!", contador);
-        vTaskDelay(pdMS_TO_TICKS(1000));
+static _Bool IRAM_ATTR timer_isr(void *param) {
+    static int sample_index = 0;
+    
+    // Leer el ADC (canal 0 de ADC1)
+    adc1_samples[sample_index] = adc1_get_raw(ADC1_CHANNEL_0);
+    
+    sample_index++;
+    if (sample_index >= NUM_SAMPLES) {
+        sample_index = 0;  // Reinicia el índice para tomar nuevas muestras
     }
+    
+    // Incrementa el contador de interrupciones por segundo
+    interrupts_per_second++;
+    
+    // Limpiar la interrupción del temporizador
+    timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_0);
+    
+    return pdTRUE;  // Indicar que la interrupción fue manejada correctamente
 }
 
+void app_main(void) {
+    // Configuración de ADC
+    esp_err_t ret = adc1_config_width(ADC_WIDTH);
+    if (ret != ESP_OK) {
+        ESP_LOGE("ADC", "Error en la configuración de la resolución del ADC");
+        return;
+    }
 
-void app_main(void)
-{
-    printf("HOLA MUNDO!!");
-    // Configurar el PM (Power Management) para asegurar que la CPU esté a 240 MHz
-    esp_pm_config_esp32_t pm_config = {
-        .max_freq_mhz = 240,  // Asegúrate de que la CPU esté a 240 MHz
-        .min_freq_mhz = 80,   // Frecuencia mínima permitida (80 MHz)
-        .light_sleep_enable = false  // No permitir el modo de bajo consumo (light sleep)
-    };
-    esp_pm_configure(&pm_config);  // Aplicar la configuración
+    ret = adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_0);
+    if (ret != ESP_OK) {
+        ESP_LOGE("ADC", "Error en la configuración del canal de ADC");
+        return;
+    }
 
-    
-    
-    // Crear un temporizador de 40 microsegundos
-    const esp_timer_create_args_t timer_args = {
-        .callback = &my_timer_callback,
-        .arg = NULL,
-        .dispatch_method = ESP_TIMER_ISR, // habilitar idf.py menuconfig -> Component config  ---> ESP Timer -> [*] Enable ISR dispatch method for esp_timer
-        .name = "my_timer"
+    // Configuración del temporizador
+    timer_config_t config = {
+        .alarm_en = TIMER_ALARM_EN,
+        .auto_reload = true,
+        .counter_dir = TIMER_COUNT_UP,
+        .divider = TIMER_DIVIDER,
     };
-    
-    esp_timer_handle_t my_timer;
-    esp_timer_create(&timer_args, &my_timer);
-    
-    // Iniciar el timer para que se ejecute después de 40 µs
-    esp_timer_start_periodic(my_timer, 40); // 40 µs
-    printf("Hola otra vez!");
-    // init_led();
-    // set_timer();
-    // xTaskCreate(print_task,"print_task", 2048, NULL, 1, NULL);
+    timer_init(TIMER_GROUP_0, TIMER_0, &config);
+
+    // Configurar la interrupción del temporizador
+    timer_isr_callback_add(TIMER_GROUP_0, TIMER_0, timer_isr, NULL, ESP_INTR_FLAG_IRAM);
+
+    // Establecer el valor de la alarma para que el temporizador dispare la interrupción cada 40 us (25kHz)
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, TIMER_INTERVAL);
+    timer_enable_intr(TIMER_GROUP_0, TIMER_0);
+
+    // Iniciar el temporizador
+    timer_start(TIMER_GROUP_0, TIMER_0);
+
+    // Mensaje inicial
+    ESP_LOGI("Main", "Iniciando muestreo ADC en tiempo real...");
+
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(1000)); //Esperar un segundo
-        ESP_LOGI(tag, "¡Timer ejecutado %d veces!", contador);
-        contador = 0; //Reiniciar el contador
+        vTaskDelay(pdMS_TO_TICKS(1000));  // Esperar 1 segundo antes de imprimir el contador de interrupciones
+
+        // Verificar cuántas interrupciones han ocurrido en el último segundo
+        uint32_t interrupts_in_last_second = interrupts_per_second;
+        interrupts_per_second = 0;  // Resetea el contador de interrupciones para el siguiente segundo
+        
+        printf("Interrupciones en el último segundo: %lu\n", interrupts_in_last_second);
+
+        // Aquí puedes agregar el código para procesar las muestras del ADC (en adc1_samples)
+        // Este ciclo es solo para ilustrar cómo se tomarían las muestras. Aquí simplemente mostramos el valor de las muestras
+        printf("Muestras del ADC:\n");
+        for (int i = 0; i < NUM_SAMPLES; i++) {
+            printf("Muestra %d: %lu\n", i, adc1_samples[i]);
+        }
     }
-
 }
-
-
-
-esp_err_t init_led(void)
-{
-    gpio_reset_pin(led1);
-    gpio_set_direction(led1, GPIO_MODE_OUTPUT);
-    return ESP_OK;
-}
-
-
-
-
-esp_err_t blink_led(void)
-{
-    led_level = !led_level;
-    gpio_set_level(led1, led_level);
-    return ESP_OK;
-}
-
-
-// esp_err_t set_timer(void)
-// {
-//     ESP_LOGI(tag, "Timer init configuration");
-//     xTimers = xTimerCreate( "Timer",        // Just a text name, not used by the kernel.
-//                             (pdMS_TO_TICKS(interval)), // The time period in ticks, intervalos en periodos de la cpu. Con esa funcion convierte los milisegundos en periodos de cpu
-//                             pdTRUE,         // The timers will auto-reload themselves when they expire.
-//                             (void *)timerId,      // Assign each timer a unique id equal to its array index.
-//                             vTimerCallback  // Each timer calls the same callback when it expires. Funcion que se ejecuta
-//     );
-//     if (xTimers == NULL)
-//     {
-//         // The timer was not created.
-//         ESP_LOGE(tag, "The timer was not created");
-//     }
-//     else
-//     {
-//         if (xTimerStart(xTimers, 0) != pdPASS)
-//         {
-//             // The timer could not be set into the Active state.
-//             ESP_LOGE(tag, "The timer could not be set into the Active state");
-//         }
-//     }
-//     return ESP_OK;
-// }
