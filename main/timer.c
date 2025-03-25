@@ -17,8 +17,9 @@
 // Buffers de almacenamiento
 static uint16_t buffer1[NUM_SAMPLES];
 static uint16_t buffer2[NUM_SAMPLES];
-volatile uint16_t *active_buffer;
-volatile uint16_t *ready_buffer;
+volatile uint16_t *active_buffer = buffer1;
+volatile uint16_t *ready_buffer = buffer2;
+static volatile int index_lectura = 0;
 
 // Semáforo para sincronización
 static SemaphoreHandle_t sem_buffer_ready;
@@ -35,7 +36,6 @@ static SemaphoreHandle_t sem_buffer_ready;
 static uint32_t adc1_samples[NUM_SAMPLES];  // Buffer para almacenar las muestras de ADC
 static volatile uint32_t interrupts_per_second = 0;  // Contador de interrupciones por segundo
 
-static volatile int index_lectura = 0;
 
 const char *tag = "main";
 
@@ -45,10 +45,6 @@ volatile uint32_t count_udps = 0;
 
 // Función de la interrupción del temporizador
 static _Bool IRAM_ATTR timer_isr(void *arg) {
-    active_buffer = buffer1;
-    ready_buffer = buffer2;
-
-
     // Leer el ADC (canal 0 de ADC1)
     // adc1_samples[sample_index] = adc1_get_raw(ADC1_CHANNEL_0);
 
@@ -156,11 +152,11 @@ void app_main(void) {
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));  // Esperar 1 segundo
 
-        // Verificar cuántas veces se ha ejecutado process_adc_samples en el último segundo
+        // Verificar cuántas veces se ha ejecutado udp_task en el último segundo
         uint32_t executions_in_last_second = count_udps;
         count_udps = 0;  // Resetea el contador de ejecuciones para el siguiente segundo
-        
-        printf("El contador de ejecuciones de process_adc_samples en el último segundo es: %lu\n", executions_in_last_second);
+        printf("El contador de ejecuciones de udp_task en el último segundo es: %lu\n", executions_in_last_second);
+
 
         // También se pueden verificar las interrupciones por segundo si es necesario
         uint32_t interrupts_in_last_second = interrupts_per_second;
