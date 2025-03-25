@@ -1,10 +1,123 @@
+Si el ESP32-S3 sigue ejecutando el código anterior y no carga uno nuevo, aquí hay varias posibles causas y soluciones:
+
+🔍 Posibles causas y soluciones
+1️⃣ El código nuevo no se está flasheando correctamente
+Si el código que subes no cambia lo que ejecuta el ESP32-S3, prueba estos pasos:
+
+💡 Solución: Forzar la carga del código nuevo
+Borra la flash antes de cargar el código:
+    idf.py erase_flash
+Vuelve a compilar y flashear:
+    idf.py flash monitor
+Prueba con otro puerto USB y cable (algunos cables solo cargan y no transfieren datos).
+
+2️⃣ Está ejecutando el código desde la RAM en lugar de la Flash
+Si el código anterior sigue en la flash, el ESP32-S3 puede estar ejecutándolo en lugar de cargar el nuevo desde RAM.
+
+💡 Solución: Forzar reinicio y limpiar RAM
+Conéctate por el monitor serial:
+    idf.py monitor
+Reinicia el ESP32-S3 manualmente (presiona el botón RESET).
+
+Si sigue igual, prueba el siguiente comando:
+    idf.py fullclean
+Luego, recompila y flashea nuevamente.
+
+3️⃣ La memoria Flash está dañada o en modo protegido
+Si la flash tiene problemas, el ESP32 puede quedar atrapado en el último código grabado.
+
+💡 Solución: Chequear errores de la Flash
+Flashea con este comando para ver si hay errores:
+    idf.py -p COMX flash monitor
+Si aparecen mensajes como "SPI Flash error" o "checksum failed", la memoria podría estar dañada.
+
+En ese caso, prueba a usar una versión diferente de ESP-IDF.
+
+4️⃣ Está entrando en modo de seguridad (Boot Mode)
+Si el ESP32-S3 entra en modo de arranque seguro accidentalmente, solo ejecutará el código anterior en la flash.
+
+💡 Solución: Forzar el modo de carga
+Mantén presionado el botón "BOOT" y mientras lo mantienes, presiona y suelta "RESET". Luego suelta "BOOT".
+
+Vuelve a flashear con:
+    idf.py flash monitor
+Si después de probar estos pasos sigue sin actualizar el código, dime qué errores aparecen en el monitor serial (idf.py monitor), y revisamos más a fondo. 🚀
+
+
+
+
+Tú dijiste:
+puede ser que haya dañado yo la flash?
+ChatGPT Plus
+Sí, es posible que la memoria Flash del ESP32-S3 se haya dañado si hiciste alguna de estas cosas:
+
+⚠️ Posibles causas de daño en la Flash
+1️⃣ Escribir demasiadas veces en la Flash
+
+La Flash tiene un número limitado de ciclos de escritura (~100,000 ciclos).
+
+Si tu código escribe constantemente en la memoria Flash (por ejemplo, en la NVS o SPIFFS), puede desgastarla.
+
+🔧 Solución:
+
+Si usas nvs_flash_write() o esp_partition_write(), asegúrate de no escribir en exceso.
+
+Usa una RAM buffer y escribe en Flash solo cuando sea necesario.
+
+2️⃣ Borrar y reescribir mal la Flash
+
+Si interrumpiste el proceso de flasheo o usaste comandos incorrectos (erase_flash sin reflash después), la Flash puede quedar en un estado inconsistente.
+
+🔧 Solución:
+
+Borra y vuelve a grabar el firmware:
+    idf.py erase_flash
+    idf.py flash monitor
+
+3️⃣ Configuración incorrecta de particiones
+
+Si cargaste un firmware con una tabla de particiones incorrecta, el ESP32-S3 puede no encontrar el código en la Flash.
+
+Errores en la configuración de particiones (por ejemplo, definir una partición más grande de lo que la Flash permite) pueden corromper la memoria.
+
+🔧 Solución:
+
+Usa la configuración predeterminada de particiones:
+    idf.py menuconfig
+Ve a "Partition Table" > "Factory app, two OTA definitions" (si usas OTA).
+    Guarda y vuelve a compilar (idf.py flash).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Pasos a seguir:
 
 cd 'C:\Users\luisr\OneDrive\Escritorio\ESP32 project\'
+cd 'C:\Users\luisr\OneDrive\Escritorio\git_marius\ESP32-S3-C\'
 idf.py fullclean
 idf.py set-target esp32s3
 idf.py reconfigure
 idf.py build
+
+esptool.py chip_id Si no se flashea bien, introducir este comando
+
+Si al flashear el ESP32-S3 sigue corriendo un código anterior,
+borra completamente la memoria flash y vuelve a cargar el programa:
+    esptool.py --chip esp32s3 erase_flash
+    idf.py flash monitor
 
 
 
