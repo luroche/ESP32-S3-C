@@ -14,7 +14,7 @@
 #define WIFI_SSID "WLAN_4110"
 #define WIFI_PASS "IBVJ7U3RBIDB2OI26Y4K"
 
-#define UDP_SERVER_IP "192.168.1.35" // Reemplaza con la IP del servidor destino
+#define UDP_SERVER_IP "192.168.2.33" // Reemplaza con la IP del servidor destino
 #define UDP_PORT 8888            // Puerto del servidor
 
 static const char *TAG = "UDP_CLIENT";
@@ -44,7 +44,7 @@ esp_wifi_connect();
 }
 
 // Función para inicializar WiFi en modo STA
-void wifi_init_sta() {
+void wifi_init_sta() { 
     esp_netif_init();
     esp_event_loop_create_default();
     esp_netif_create_default_wifi_sta();
@@ -54,6 +54,12 @@ void wifi_init_sta() {
     
     esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL, NULL);
     esp_event_handler_instance_register(IP_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL, NULL);
+
+    // Desconectar cualquier conexión previa (si hay alguna)
+    esp_wifi_disconnect();
+
+    // Limpiar cualquier configuración de WPA2 Enterprise (si es necesario)
+    // esp_wifi_sta_wpa2_ent_clear(); // Si no usas WPA2 Enterprise, no es necesario
 
     wifi_config_t wifi_config = {
         .sta = {
@@ -72,7 +78,7 @@ void wifi_init_sta() {
 void udp_client_task(void *pvParameters) {
     struct sockaddr_in server_addr;
     int sock;
-    int vector[] = {10, 20, 30, 40, 50}; // Vector a enviar
+    int vector[] = {10, 20, 30}; // Vector a enviar
     size_t vector_size = sizeof(vector);
 
     // Crear socket UDP
@@ -89,6 +95,7 @@ void udp_client_task(void *pvParameters) {
 
     while (1) {
         // Enviar vector al servidor
+        ESP_LOGI(TAG, "Enviando datos a: %s:%d", UDP_SERVER_IP, UDP_PORT);
         int sent_bytes = sendto(sock, vector, vector_size, 0,
                                 (struct sockaddr *)&server_addr, sizeof(server_addr));
         if (sent_bytes < 0) {
@@ -108,7 +115,7 @@ void udp_client_task(void *pvParameters) {
 // **Main Application**
 void app_main() {
     esp_log_level_set("wifi", ESP_LOG_DEBUG);
-    printf("Comenzamos señores PARTE 2...");
+    printf("Comenzamos señores PARTE 5...");
     // Inicializar NVS para almacenamiento persistente (requerido por WiFi)
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {

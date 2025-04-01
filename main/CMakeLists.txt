@@ -1,7 +1,8 @@
 idf_component_register(
-    SRCS "timer.c" #Archivo fuente
+    SRCS "prueba_wifi.c"
+    # SRCS "timer.c" "prueba_wifi.c" #Archivo fuente
     INCLUDE_DIRS "."
-    REQUIRES driver esp_timer lwip esp_eth freertos)
+    REQUIRES driver esp_timer lwip esp_eth freertos esp_wifi esp_event nvs_flash )
 
 
 
