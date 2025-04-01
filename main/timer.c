@@ -28,12 +28,12 @@ static const char *TAG = "UDP_CLIENT";
 
 
 
-#define NUM_SAMPLES 200  // Número de muestras por paquete UDP
+#define NUM_SAMPLES 200*3  // Número de muestras por paquete UDP
 #define ADC_CHANNEL ADC1_CHANNEL_0  // Canal del ADC (ajustar según el hardware)
 
 // Buffers de almacenamiento
-static uint16_t buffer1[NUM_SAMPLES*3];
-static uint16_t buffer2[NUM_SAMPLES*3];
+static uint16_t buffer1[NUM_SAMPLES];
+static uint16_t buffer2[NUM_SAMPLES];
 volatile uint16_t *active_buffer = buffer1;
 volatile uint16_t *ready_buffer = buffer2;
 static volatile int index_lectura = 0;
@@ -116,7 +116,7 @@ static _Bool IRAM_ATTR timer_isr(void *arg) {
     active_buffer[index_lectura+2] = 5050;
     index_lectura = index_lectura + 3;
 
-    if (index_lectura >= (NUM_SAMPLES*3)) {
+    if (index_lectura >= NUM_SAMPLES) {
         // Intercambiar buffers
         uint16_t *temp = ready_buffer;
         ready_buffer = active_buffer;
@@ -163,7 +163,7 @@ void udp_task(void *arg) {
             // ESP_LOGI(tag, "Recibe");  // Si se recibe
             count_udps++;
             // ESP_LOGI(TAG, "Enviando datos a: %s:%d", UDP_SERVER_IP, UDP_PORT);
-            int sent_bytes = sendto(sock, ready_buffer, (NUM_SAMPLES*3) * sizeof(uint16_t), 0,
+            int sent_bytes = sendto(sock, ready_buffer, NUM_SAMPLES * sizeof(int16_t), 0,
                                     (struct sockaddr *)&server_addr, sizeof(server_addr));
             if (sent_bytes < 0) {
                 ESP_LOGE(TAG, "Error enviando datos: %s", strerror(errno));
