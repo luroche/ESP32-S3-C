@@ -10,3 +10,4 @@ build/
 components/
 .vscode/
 sdkconfig
+sdkconfig.old
